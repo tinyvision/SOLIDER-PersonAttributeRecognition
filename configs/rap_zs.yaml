@@ -1,0 +1,52 @@
+NAME: '.sm08'
+
+DATASET:
+  TYPE: 'pedes'
+  NAME: 'RAP2'
+  TRAIN_SPLIT: 'trainval'
+  VAL_SPLIT: 'test'
+  ZERO_SHOT: True
+  LABEL: 'eval'
+  HEIGHT: 256
+  WIDTH: 192
+
+RELOAD:
+  TYPE: False
+  NAME: 'backbone'
+
+BACKBONE:
+  TYPE: 'swin_t' # swin_t/s/b
+
+CLASSIFIER:
+  NAME: 'linear'
+  POOLING: 'avg'
+  SCALE: 1
+  BN: False
+
+LOSS:
+  TYPE: 'bceloss'
+  LOSS_WEIGHT: [1]
+  SAMPLE_WEIGHT: 'weight'
+
+
+TRAIN:
+  CLIP_GRAD: True
+  MAX_EPOCH: 30
+  BATCH_SIZE: 64
+  OPTIMIZER:
+    TYPE: 'adam'
+    MOMENTUM: 0.9
+    WEIGHT_DECAY: 5e-4
+  LR_SCHEDULER:
+    TYPE: 'plateau'
+    LR_STEP: [10, 15]
+    LR_FT: 0.00001
+    LR_NEW: 0.00001
+  EMA:
+    ENABLE: False
+
+METRIC:
+  TYPE: 'pedestrian'
+
+VIS:
+  CAM: 'valid'
